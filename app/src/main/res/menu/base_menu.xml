@@ -21,4 +21,10 @@
     <item
         android:id="@+id/cards_map"
         android:title="Show all Cards" />
+    <item
+        android:id="@+id/api_menu"
+        android:title="Exchange Rate" />
+    <item
+        android:id="@+id/logout_menu"
+        android:title="Logout" />
 </menu>

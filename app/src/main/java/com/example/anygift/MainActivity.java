@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavHost;
+import androidx.navigation.Navigation;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.example.anygift.model.Model;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,6 +62,19 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(map);
 
                     break;
+                }
+                case R.id.api_menu: {
+
+                    navCtr.navigate(R.id.actionToApi);
+                    break;
+
+                }
+                case R.id.logout_menu: {
+                   UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+                   userViewModel.logout();
+                    navCtr.navigate(R.id.loginFragment);
+                    break;
+
                 }
             }
         } else {

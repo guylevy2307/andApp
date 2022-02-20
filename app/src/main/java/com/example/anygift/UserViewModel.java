@@ -20,8 +20,12 @@ public class UserViewModel extends ViewModel {
     public interface GetUserListener {
         void onComplete(User user);
     }
-
+    public interface SetUserListener {
+        void onComplete(User user);
+    }
     public void getUser(final GetUserListener listener) {
+        if(FirebaseAuth.getInstance().getCurrentUser()==null)
+            return;
         FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getEmail()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -64,5 +68,10 @@ public class UserViewModel extends ViewModel {
     String getUserPhone() {
         return (user != null) ? user.getPhone() : "User_Phone";
     }
+
+    void logout(){
+        FirebaseAuth.getInstance().signOut();
+    }
+
 }
 

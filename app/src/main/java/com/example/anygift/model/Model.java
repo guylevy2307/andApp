@@ -22,9 +22,11 @@ public class Model {
     public ModelFirebase modelFirebase = new ModelFirebase();
     Executor executor = Executors.newFixedThreadPool(1);
     Handler mainThread = HandlerCompat.createAsync(Looper.getMainLooper());
+    public User signedUser;
 
 
     private Model() {
+        signedUser = new User();
         ListLoadingState.setValue(GiftListLoadingState.loaded);
 
     }
@@ -175,7 +177,6 @@ public class Model {
     public void updateUser(final User user, final AddUserListener listener) {
         modelFirebase.updateUser(user, listener);
     }
-
 
     public ModelFirebase getModelFirebase() {
         return this.modelFirebase;

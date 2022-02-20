@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavHost;
 import androidx.navigation.Navigation;
@@ -44,7 +45,7 @@ public class LoginFragment extends Fragment {
     Snackbar mySnackbar;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     ProgressBar pb;
-
+    UserViewModel userViewModel;
     Button signIn_btn, signUp_btn, forgotP_btn;
     TextInputEditText email, password;
     String email_user, password_user;
@@ -52,6 +53,15 @@ public class LoginFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        userViewModel.getUser(new UserViewModel.GetUserListener() {
+            @Override
+            public void onComplete(User user) {
+                if(user!=null){
+                    Navigation.findNavController(view).navigate(R.id.action_global_feedFragment);
+                }
+            }
+        });
         setHasOptionsMenu(true);
         getActivity().setTitle("AnyGift - Login");
         view = inflater.inflate(R.layout.fragment_login, container, false);
@@ -109,7 +119,6 @@ public class LoginFragment extends Fragment {
                     mySnackbar = Snackbar.make(view, "Login successful :)", BaseTransientBottomBar.LENGTH_LONG);
                     mySnackbar.show();
                     Log.d("TAG", "login successful");
-
                     Navigation.findNavController(view).navigate(R.id.action_global_feedFragment);
                 } else
                     //Log.d("TAG","Login failed");
